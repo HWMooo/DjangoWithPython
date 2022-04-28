@@ -9,6 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
 
 from skaterbase.forms import SignUpForm
 from skaterbase.tokens import account_activation_token
@@ -61,6 +62,6 @@ def activate(request, uidb64, token):
         user.profile.email_confirmed = True
         user.save()
         login(request, user)
-        return redirect('home')
+        return redirect('skaterbase-home')
     else:
         return render(request, 'account_activation_invalid.html')
